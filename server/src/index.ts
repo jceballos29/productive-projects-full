@@ -2,6 +2,7 @@ import { buildApp } from './config';
 import http, { Server } from 'http';
 import { logger } from './utils';
 import { env, connect, disconnect } from './config';
+import { seed } from './seed';
 
 const main = async () => {
 	const app = buildApp();
@@ -10,6 +11,7 @@ const main = async () => {
 	server.listen(env.PORT, async () => {
 		logger.info(`Server running on port ${env.PORT}`);
 		await connect(env.MONGO_URI);
+		await seed();
 	});
 
 	const signals: NodeJS.Signals[] = ['SIGINT', 'SIGTERM', 'SIGQUIT'];

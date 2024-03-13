@@ -1,30 +1,11 @@
-import { loadAbort } from '../../../utils';
+import { AxiosCall, LoginRequest, LoginResponse } from '@/models';
 import api from '..';
+import { loadAbort } from '../../../utils';
 
-export interface LoginRequest {
-	email: string;
-	password: string;
-}
-
-export interface UserResponse {
-	_id: string;
-	email: string;
-	password: string | null;
-	role: string;
-	createdAt: string;
-	updatedAt: string;
-}
-
-export interface LoginResponse {
-	accessToken: string;
-	refreshToken: string;
-	user: UserResponse;
-}
-
-export const login = (data: LoginRequest) => {
+export const login = (data: LoginRequest): AxiosCall<LoginResponse> => {
 	const controller = loadAbort();
 	return {
-		call: api.post<LoginResponse>('/auth/login', data, {
+		call: api.post('/auth/login', data, {
 			signal: controller.signal,
 		}),
 		controller,

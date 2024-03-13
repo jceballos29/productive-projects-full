@@ -1,68 +1,81 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { AxiosError, AxiosResponse, isAxiosError } from 'axios';
+import { AxiosError, isAxiosError } from 'axios';
 import { AxiosCall } from '@/models';
+import { ApiResponse } from '@/models/api';
 
-export interface UseRequestState {
-	error: string | null;
-	loading: boolean;
-	callEndpoint: (
-		axiosCall: AxiosCall<unknown>,
-	) => Promise<AxiosResponse<unknown>>;
-}
-
-const useRequest = () => {
+const useRequest = <T, U>(
+	initialCall: AxiosCall<T> | null = null,
+	adapter: ((data: T) => U) | undefined = undefined,
+	// 	{
+	// 	initialCall = null,
+	// 	adapter = undefined,
+	// }: {
+	// 	initialCall?: AxiosCall<T> | null;
+	// 	adapter?: (data: T) => U;
+	// }
+) => {
 	const [loading, setLoading] = useState(false);
 
 	const controller = useRef<AbortController | undefined>(undefined);
 
 	const callEndpoint = useCallback(
-		async (axiosCall: AxiosCall<unknown>) => {
+		async (axiosCall: AxiosCall<T>): Promise<ApiResponse<U>> => {
 			if (axiosCall.controller)
 				controller.current = axiosCall.controller;
 			setLoading(true);
-			let result: AxiosResponse<unknown> | undefined;
 			let response = {} as {
 				success: boolean;
 				message: string;
 				data: unknown;
 			};
 			try {
-				result = await axiosCall.call;
-				console.log(result)
-				response = result.data as {
-					success: boolean;
-					message: string;
-					data: unknown;
+				const { data: result } = await axiosCall.call;
+				response = {
+					success: result.success,
+					message: result.message,
+					data: adapter
+						? result.data
+							? adapter(result.data)
+							: null
+						: result.data,
 				};
 			} catch (err: unknown) {
 				if (isAxiosError(err)) {
-					const error = err as AxiosError;
-					console.log(error.response?.data);
-					response = error.response?.data as {
-						success: boolean;
-						message: string;
-						data: unknown;
+					const error = err as AxiosError<ApiResponse<T>>;
+					const { data: result } = error.response!;
+					response = {
+						success: result.success || false,
+						message: result.message || '',
+						data: adapter
+							? result.data
+								? adapter(result.data)
+								: null
+							: result.data,
 					};
 				}
 			} finally {
 				setLoading(false);
 			}
-			return response;
+			return response as ApiResponse<U>;
 		},
-		[],
+		[adapter],
 	);
 
+	const cancelEndpoint = () => {
+		setLoading(false);
+		if (controller.current) controller.current?.abort();
+	};
+
 	useEffect(() => {
-		const cancelEndpoint = () => {
-			setLoading(false);
-			controller.current?.abort();
-		};
+		if (initialCall) {
+			callEndpoint(initialCall);
+		}
 		return () => {
 			cancelEndpoint();
 		};
-	}, []);
+	}, [callEndpoint, initialCall]);
 
-	return { loading, callEndpoint };
+	return { loading, callEndpoint, cancelEndpoint };
 };
 
 export default useRequest;
