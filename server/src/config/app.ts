@@ -7,13 +7,6 @@ import { httpResponses } from '../utils';
 
 import routes from '../modules';
 
-interface SessionData {
-	user?: {
-		id: string;
-		role: string;
-	};
-}
-
 export const buildApp = () => {
 	const app: Application = express();
 

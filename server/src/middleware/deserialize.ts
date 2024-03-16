@@ -31,7 +31,6 @@ export const deserialize = async (
 
 		return next();
 	} catch (error: any) {
-		console.log(error);
 		if (error instanceof TokenExpiredError) {
 			return httpResponses.Unauthorized(res, 'Token expired');
 		}

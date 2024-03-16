@@ -1,9 +1,7 @@
 'use client';
 import React from 'react';
 
-export interface DashboardProps {
-	// types...
-}
+export interface DashboardProps {}
 
 const Dashboard: React.FC<DashboardProps> = () => {
 	return <div>Dashboard works!</div>;

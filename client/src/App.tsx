@@ -1,17 +1,46 @@
-import { Route, Routes } from 'react-router-dom';
+import {
+	RouterProvider,
+	createBrowserRouter,
+} from 'react-router-dom';
+import { Loader } from './components';
 import { Dashboard, Home, Login } from './pages';
-import Loader from './components/Loader';
+import { MainLayout } from './components/layouts';
+import PrivateRoutes from './guards/PrivateRoutes';
+
+const router = createBrowserRouter([
+	{
+		path: '/',
+		element: <MainLayout />,
+		children: [
+			{
+				path: '',
+				element: <PrivateRoutes />,
+				children: [
+					{
+						index: true,
+						element: <Home />,
+					},
+					{
+						path: '/dashboard',
+						element: <Dashboard />,
+					},
+				],
+			},
+			{
+				path: '/login',
+				element: <Login />,
+			},
+		],
+	},
+]);
+
+if (import.meta.hot) {
+	import.meta.hot.dispose(() => router.dispose());
+}
 
 const App = () => {
 	return (
-		<main className='bg-sky-50 w-full h-screen flex flex-col relative'>
-			<Loader />
-			<Routes>
-				<Route path='/' element={<Home />} />
-				<Route path='/dashboard' element={<Dashboard />} />
-				<Route path='/login' element={<Login />} />
-			</Routes>
-		</main>
+		<RouterProvider router={router} fallbackElement={<Loader />} />
 	);
 };
 

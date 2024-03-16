@@ -41,7 +41,7 @@ const Input: React.FC<InputProps> = ({
 		<div className={`pb-5 mb-2 w-full relative`}>
 			<label
 				htmlFor={name}
-				className='pl-2 mb-1 block text-sm font-medium text-gray-700'
+				className='mb-1 block text-sm font-medium text-gray-700'
 			>
 				{label}
 			</label>
@@ -81,7 +81,7 @@ const Input: React.FC<InputProps> = ({
 				)}
 			</div>
 			<p
-				className={`absolute text-rose-500 text-xs pl-2 mt-0.5 ${
+				className={`absolute text-rose-500 text-xs mt-0.5 ${
 					isError ? 'opacity-100' : 'opacity-0'
 				} transition-all`}
 			>

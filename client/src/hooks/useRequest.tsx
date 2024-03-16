@@ -1,44 +1,21 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { AxiosError, isAxiosError } from 'axios';
 import { AxiosCall } from '@/models';
 import { ApiResponse } from '@/models/api';
+import { AxiosError, isAxiosError } from 'axios';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
-const useRequest = <T, U>(
-	initialCall: AxiosCall<T> | null = null,
-	adapter: ((data: T) => U) | undefined = undefined,
-	// 	{
-	// 	initialCall = null,
-	// 	adapter = undefined,
-	// }: {
-	// 	initialCall?: AxiosCall<T> | null;
-	// 	adapter?: (data: T) => U;
-	// }
-) => {
+const useRequest = <T,>() => {
 	const [loading, setLoading] = useState(false);
-
 	const controller = useRef<AbortController | undefined>(undefined);
 
 	const callEndpoint = useCallback(
-		async (axiosCall: AxiosCall<T>): Promise<ApiResponse<U>> => {
+		async (axiosCall: AxiosCall<T>): Promise<ApiResponse<T>> => {
 			if (axiosCall.controller)
 				controller.current = axiosCall.controller;
 			setLoading(true);
-			let response = {} as {
-				success: boolean;
-				message: string;
-				data: unknown;
-			};
+			let response = {} as ApiResponse<T>;
 			try {
-				const { data: result } = await axiosCall.call;
-				response = {
-					success: result.success,
-					message: result.message,
-					data: adapter
-						? result.data
-							? adapter(result.data)
-							: null
-						: result.data,
-				};
+				const result = await axiosCall.call;
+				response = result.data;
 			} catch (err: unknown) {
 				if (isAxiosError(err)) {
 					const error = err as AxiosError<ApiResponse<T>>;
@@ -46,19 +23,21 @@ const useRequest = <T, U>(
 					response = {
 						success: result.success || false,
 						message: result.message || '',
-						data: adapter
-							? result.data
-								? adapter(result.data)
-								: null
-							: result.data,
+						data: result.data,
+					};
+				} else {
+					response = {
+						success: false,
+						message: (err as Error).message,
+						data: null,
 					};
 				}
 			} finally {
 				setLoading(false);
 			}
-			return response as ApiResponse<U>;
+			return response;
 		},
-		[adapter],
+		[],
 	);
 
 	const cancelEndpoint = () => {
@@ -67,13 +46,10 @@ const useRequest = <T, U>(
 	};
 
 	useEffect(() => {
-		if (initialCall) {
-			callEndpoint(initialCall);
-		}
 		return () => {
 			cancelEndpoint();
 		};
-	}, [callEndpoint, initialCall]);
+	}, []); // No necesitas dependencias aquí
 
 	return { loading, callEndpoint, cancelEndpoint };
 };

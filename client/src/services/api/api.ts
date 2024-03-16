@@ -26,20 +26,20 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-
+      localStorage.removeItem('accessToken');
       const refreshToken = localStorage.getItem('refreshToken');
 
       if (refreshToken) {
-        const response = await api.post('/refresh', {
+        const response = await api.post('/auth/refresh', {
           refreshToken,
         });
 
         if (response.status === 200) {
-          localStorage.setItem('token', response.data.token);
-          localStorage.setItem('refreshToken', response.data.refreshToken);
+          const { data: result } = response
+          localStorage.setItem('accessToken', result.data.accessToken);
+          localStorage.setItem('refreshToken', result.data.refreshToken);
 
           return api(originalRequest);
         }

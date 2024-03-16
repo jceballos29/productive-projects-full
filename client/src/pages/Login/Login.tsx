@@ -2,41 +2,36 @@
 import { Form } from '@/components';
 import { Input } from '@/components/ui';
 import { useRequest } from '@/hooks';
-import {
-	LoginResponse,
-	User,
-	UserResponse,
-	loginSchema,
-} from '@/models';
+import { LoginResponse, UserResponse, loginSchema } from '@/models';
 import { login } from '@/services/api/endpoints';
+import { setAuth } from '@/services/state/slices/auth';
+import {
+	RootState,
+	useAppDispatch,
+	useAppSelector,
+} from '@/services/state/store';
+import { userAdapter } from '@/utils';
+import { TrophyIcon } from '@heroicons/react/24/outline';
 import React from 'react';
+import { toast } from 'react-hot-toast';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
-export interface LoginProps {
-	// types...
-}
+export interface LoginProps {}
 
 const Login: React.FC<LoginProps> = () => {
-	const { callEndpoint, loading } = useRequest<
-		LoginResponse,
-		LoginResponse
-	>();
+	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
+	const location = useLocation();
 
-	const userAdapter = (data: UserResponse): User => {
-		return {
-			id: data._id,
-			name: data.name,
-			email: data.email,
-			role: data.role,
-			createdAt: new Date(data.createdAt),
-			updatedAt: new Date(data.updatedAt),
-		};
-	};
+	const { isAuthenticated } = useAppSelector(
+		(state: RootState) => state.auth,
+	);
+
+	const { callEndpoint, loading } = useRequest<LoginResponse>();
 
 	const action = async (data: z.infer<typeof loginSchema>) => {
-		console.log({ data });
 		const response = await callEndpoint(login(data));
-		console.log({ response });
 		if (response.success) {
 			localStorage.setItem(
 				'accessToken',
@@ -47,38 +42,83 @@ const Login: React.FC<LoginProps> = () => {
 				response.data?.refreshToken || '',
 			);
 			const user = userAdapter(response.data?.user as UserResponse);
-			console.log({ user });
+			dispatch(setAuth(user));
+			toast.success(response.message || 'Success!');
 			return true;
 		} else {
+			toast.error(response.message || 'Error!');
 			return false;
 		}
 	};
 
+	React.useEffect(() => {
+		if (isAuthenticated) {
+			const from = location.state?.from || null;
+			navigate(from || '/dashboard', { replace: true });
+		}
+	}, [isAuthenticated, location.state, navigate]);
+
 	return (
-		<main className='bg-sky-white container mx-auto px-4 w-full h-screen flex flex-col'>
-			<h1 className='mb-6 font-bold text-3xl'>Login</h1>
-			<Form
-				schema={loginSchema}
-				action={action as (data: unknown) => Promise<boolean>}
-				loading={loading}
-				submitText='Login'
-			>
-				<Input
-					name='email'
-					label='Email'
-					placeholder='Enter your email'
-					schema={loginSchema.shape.email}
-					allowClear
-				/>
-				<Input
-					name='password'
-					label='Password'
-					type='password'
-					placeholder='Enter your password'
-					schema={loginSchema.shape.password}
-				/>
-			</Form>
-		</main>
+		<div className='w-full h-full flex flex-col items-center justify-center'>
+			<div className='flex items-center gap-1 mb-10'>
+				<figure className='w-8 aspect-square border flex items-center justify-center rounded-md bg-indigo-500 border-indigo-500'>
+					<TrophyIcon className='h-5 w-5 text-indigo-50' />
+				</figure>
+				<p className='text-base font-bold tracking-tight text-slate-900'>
+					<span className='text-indigo-500'>Productive</span> Projects
+				</p>
+			</div>
+			<div className='w-full max-w-96 mx-auto px-8 py-10 rounded-md  bg-gray-50'>
+				<div className='space-y-2 mb-8'>
+					<h1 className='text-3xl font-bold leading-9 tracking-tight text-slate-900'>
+						Sign in to account
+					</h1>
+					<p className='text-slate-500'>
+						Enter your email & password to login
+					</p>
+				</div>
+				<Form
+					schema={loginSchema}
+					action={action as (data: unknown) => Promise<boolean>}
+					loading={loading}
+					submitText='Login'
+				>
+					<Input
+						name='email'
+						label='Email address'
+						placeholder='example@mail.com'
+						schema={loginSchema.shape.email}
+						allowClear
+					/>
+					<Input
+						name='password'
+						label='Password'
+						type='password'
+						placeholder='**********'
+						schema={loginSchema.shape.password}
+					/>
+					<div className='w-full flex justify-end mb-3'>
+						<p className='text-sm font-medium text-indigo-500'>
+							Forgot Password
+						</p>
+					</div>
+				</Form>
+				<div className='mt-6'>
+					<p className='mx-auto text-center text-sm text-slate-500'>
+						Don't have an account?{' '}
+						<span
+							onClick={() => navigate('/register')}
+							className='text-indigo-500 cursor-pointer'
+						>
+							Sign up
+						</span>
+					</p>
+				</div>
+			</div>
+			<p className='text-xs text-slate-400 mt-8 text-left'>
+				&copy; Juan Ceballos 2024
+			</p>
+		</div>
 	);
 };
 

@@ -1,4 +1,4 @@
-import { validatePassword } from '../users/users.service';
+import { validatePassword, findOne as findOneUser } from '../users/users.service';
 import { Request, Response } from 'express';
 import { httpResponses, signToken } from '../../utils';
 import { LoginInput, RefreshInput } from './auth.schema';
@@ -97,6 +97,19 @@ export const refresh = async (
 			accessToken: newAccessToken,
 			refreshToken: req.body.refreshToken,
 		});
+	} catch (error: any) {
+		httpResponses.InternalServerError(res, error.message);
+	}
+};
+
+export const me = async (req: Request, res: Response): Promise<void> => {
+	try {
+		const user = await findOneUser({ _id: res.locals.user.id });
+		if (!user) {
+			httpResponses.NotFound(res, 'User not found');
+			return;
+		}
+		httpResponses.OK(res, 'User found', user);
 	} catch (error: any) {
 		httpResponses.InternalServerError(res, error.message);
 	}
