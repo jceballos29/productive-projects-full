@@ -9,6 +9,7 @@ import { TrophyIcon } from '@heroicons/react/24/outline';
 import React from 'react';
 import { Toaster } from 'react-hot-toast';
 import { Outlet } from 'react-router-dom';
+import Navbar from '../Navbar';
 
 export interface MainLayoutProps {}
 
@@ -29,11 +30,10 @@ const MainLayout: React.FC<MainLayoutProps> = () => {
 			}, 2000);
 		};
 		fetchUser();
-
 	}, [callEndpoint, dispatch]);
 
 	return (
-		<main className='w-full h-screen max-h-screen relative bg-indigo-200'>
+		<main className='w-full h-screen max-h-screen relative bg-indigo-100'>
 			<Toaster position='top-center' reverseOrder={false} />
 			{loading ? (
 				<div className='w-full h-full flex items-center justify-center'>
@@ -42,7 +42,12 @@ const MainLayout: React.FC<MainLayoutProps> = () => {
 					</figure>
 				</div>
 			) : (
-				<Outlet />
+				<div className='w-ful h-full flex flex-col'>
+					<Navbar />
+					<div className='w-full flex-grow p-2 sm:p-6 lg:p-4'>
+						<Outlet />
+					</div>
+				</div>
 			)}
 		</main>
 	);

@@ -6,6 +6,7 @@ export const userAdapter = (data: UserResponse): User => {
 		name: data.name,
 		email: data.email,
 		role: data.role,
+		avatar: null,
 		createdAt: data.createdAt,
 		updatedAt: data.updatedAt,
 	};

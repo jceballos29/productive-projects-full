@@ -11,7 +11,6 @@ import {
 	useAppSelector,
 } from '@/services/state/store';
 import { userAdapter } from '@/utils';
-import { TrophyIcon } from '@heroicons/react/24/outline';
 import React from 'react';
 import { toast } from 'react-hot-toast';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -60,14 +59,6 @@ const Login: React.FC<LoginProps> = () => {
 
 	return (
 		<div className='w-full h-full flex flex-col items-center justify-center'>
-			<div className='flex items-center gap-1 mb-10'>
-				<figure className='w-8 aspect-square border flex items-center justify-center rounded-md bg-indigo-500 border-indigo-500'>
-					<TrophyIcon className='h-5 w-5 text-indigo-50' />
-				</figure>
-				<p className='text-base font-bold tracking-tight text-slate-900'>
-					<span className='text-indigo-500'>Productive</span> Projects
-				</p>
-			</div>
 			<div className='w-full max-w-96 mx-auto px-8 py-10 rounded-md  bg-gray-50'>
 				<div className='space-y-2 mb-8'>
 					<h1 className='text-3xl font-bold leading-9 tracking-tight text-slate-900'>

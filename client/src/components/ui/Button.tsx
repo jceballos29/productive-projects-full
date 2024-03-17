@@ -14,6 +14,7 @@ export interface ButtonProps {
 	fullWidth?: boolean;
 	rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
 	danger?: boolean;
+	shadow?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -29,6 +30,7 @@ const Button: React.FC<ButtonProps> = ({
 	fullWidth = false,
 	rounded = 'md',
 	danger = false,
+	shadow = true,
 }) => {
 	const getSizeClass = () => {
 		switch (size) {
@@ -63,9 +65,9 @@ const Button: React.FC<ButtonProps> = ({
 			case 'primary':
 				return `${
 					danger
-						? 'shadow-sm bg-rose-500 hover:bg-rose-400 hover:border-rose-400 active:bg-rose-600 border-rose-500'
-						: 'shadow-sm bg-indigo-500 hover:bg-indigo-400 hover:border-indigo-400 active:bg-indigo-600 border-indigo-500'
-				} text-white`;
+						? 'bg-rose-500 hover:bg-rose-400 hover:border-rose-400 active:bg-rose-600 border-rose-500'
+						: 'bg-indigo-500 hover:bg-indigo-400 hover:border-indigo-400 active:bg-indigo-600 border-indigo-500'
+				} text-slate-50`;
 			case 'text':
 				return `${
 					danger
@@ -76,8 +78,8 @@ const Button: React.FC<ButtonProps> = ({
 			default:
 				return `${
 					danger
-						? 'shadow-sm text-rose-500 border-rose-500 hover:border-rose-400 hover:text-rose-400 active:border-rose-700 active:text-rose-700'
-						: 'shadow-sm bg-white text-slate-600 border-slate-300 hover:border-indigo-500 hover:text-indigo-500 active:border-indigo-600 active:text-indigo-600'
+						? 'text-rose-500 border-rose-500 hover:border-rose-400 hover:text-rose-400 active:border-rose-700 active:text-rose-700'
+						: 'bg-white text-slate-600 border-slate-300 hover:border-indigo-500 hover:text-indigo-500 active:border-indigo-600 active:text-indigo-600'
 				}`;
 		}
 	};
@@ -117,6 +119,7 @@ const Button: React.FC<ButtonProps> = ({
 				getVariantClass(),
 				getRoundedClass(),
 				fullWidth ? 'w-full' : 'w-auto',
+				shadow ? 'shadow-md' : 'shadow-none',
 				'select-none flex items-center border justify-center font-medium transition-all duration-300 hover:transition-all hover:duration-200 ease-in-out outline-none focus:outline-none active:outline-none ',
 				disabled
 					? 'disabled:bg-slate-300 disabled:border-slate-400 disabled:text-slate-500'
