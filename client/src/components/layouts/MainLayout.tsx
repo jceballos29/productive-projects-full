@@ -9,7 +9,6 @@ import { TrophyIcon } from '@heroicons/react/24/outline';
 import React from 'react';
 import { Toaster } from 'react-hot-toast';
 import { Outlet } from 'react-router-dom';
-import Navbar from '../Navbar';
 
 export interface MainLayoutProps {}
 
@@ -42,12 +41,7 @@ const MainLayout: React.FC<MainLayoutProps> = () => {
 					</figure>
 				</div>
 			) : (
-				<div className='w-ful h-full flex flex-col'>
-					<Navbar />
-					<div className='w-full flex-grow p-2 sm:p-6 lg:p-4'>
-						<Outlet />
-					</div>
-				</div>
+				<Outlet />
 			)}
 		</main>
 	);

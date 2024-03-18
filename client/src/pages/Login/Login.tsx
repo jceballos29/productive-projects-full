@@ -1,5 +1,6 @@
 'use client';
 import { Form } from '@/components';
+import { PublicLayout } from '@/components/layouts';
 import { Input } from '@/components/ui';
 import { useRequest } from '@/hooks';
 import { LoginResponse, UserResponse, loginSchema } from '@/models';
@@ -58,58 +59,57 @@ const Login: React.FC<LoginProps> = () => {
 	}, [isAuthenticated, location.state, navigate]);
 
 	return (
-		<div className='w-full h-full flex flex-col items-center justify-center'>
-			<div className='w-full max-w-96 mx-auto px-8 py-10 rounded-md  bg-gray-50'>
-				<div className='space-y-2 mb-8'>
-					<h1 className='text-3xl font-bold leading-9 tracking-tight text-slate-900'>
-						Sign in to account
-					</h1>
-					<p className='text-slate-500'>
-						Enter your email & password to login
-					</p>
-				</div>
-				<Form
-					schema={loginSchema}
-					action={action as (data: unknown) => Promise<boolean>}
-					loading={loading}
-					submitText='Login'
-				>
-					<Input
-						name='email'
-						label='Email address'
-						placeholder='example@mail.com'
-						schema={loginSchema.shape.email}
-						allowClear
-					/>
-					<Input
-						name='password'
-						label='Password'
-						type='password'
-						placeholder='**********'
-						schema={loginSchema.shape.password}
-					/>
-					<div className='w-full flex justify-end mb-3'>
-						<p className='text-sm font-medium text-indigo-500'>
-							Forgot Password
+		<PublicLayout>
+			<div className='w-full h-full flex flex-col items-center justify-center'>
+				<div className='w-full max-w-96 mx-auto px-8 py-10 rounded-md  bg-gray-50'>
+					<div className='space-y-2 mb-8'>
+						<h1 className='text-3xl font-bold leading-9 tracking-tight text-slate-900'>
+							Sign in to account
+						</h1>
+						<p className='text-slate-500'>
+							Enter your email & password to login
 						</p>
 					</div>
-				</Form>
-				<div className='mt-6'>
-					<p className='mx-auto text-center text-sm text-slate-500'>
-						Don't have an account?{' '}
-						<span
-							onClick={() => navigate('/register')}
-							className='text-indigo-500 cursor-pointer'
-						>
-							Sign up
-						</span>
-					</p>
+					<Form
+						schema={loginSchema}
+						action={action as (data: unknown) => Promise<boolean>}
+						loading={loading}
+						submitText='Login'
+					>
+						<Input
+							name='email'
+							label='Email address'
+							placeholder='example@mail.com'
+							schema={loginSchema.shape.email}
+							allowClear
+						/>
+						<Input
+							name='password'
+							label='Password'
+							type='password'
+							placeholder='**********'
+							schema={loginSchema.shape.password}
+						/>
+						<div className='w-full flex justify-end mb-3'>
+							<p className='text-sm font-medium text-indigo-500'>
+								Forgot Password
+							</p>
+						</div>
+					</Form>
+					<div className='mt-6'>
+						<p className='mx-auto text-center text-sm text-slate-500'>
+							Don't have an account?{' '}
+							<span
+								onClick={() => navigate('/register')}
+								className='text-indigo-500 cursor-pointer'
+							>
+								Sign up
+							</span>
+						</p>
+					</div>
 				</div>
 			</div>
-			<p className='text-xs text-slate-400 mt-8 text-left'>
-				&copy; Juan Ceballos 2024
-			</p>
-		</div>
+		</PublicLayout>
 	);
 };
 
