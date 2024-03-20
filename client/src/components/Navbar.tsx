@@ -8,7 +8,7 @@ import {
 	HomeIcon,
 	Squares2X2Icon,
 	BellIcon,
-	UserIcon
+	UserIcon,
 } from '@heroicons/react/24/outline';
 
 export interface NavbarProps {}
@@ -26,64 +26,67 @@ const Navbar: React.FC<NavbarProps> = () => {
 					<Link to='/'>
 						<Logo text />
 					</Link>
-					{isAuthenticated && (
-						<div className='flex items-center space-x-3'>
-							<Link
-								to={location.pathname === '/' ? '/dashboard' : '/'}
-							>
-								<Button
-									variant='text'
-									size='sm'
-									rounded='md'
-									shadow={false}
-									icon={
-										location.pathname === '/' ? (
-											<Squares2X2Icon className='h-4 w-4' />
-										) : (
-											<HomeIcon className='h-4 w-4' />
-										)
-									}
-									className='bg-slate-300 hover:bg-slate-400'
-								>
-									{location.pathname === '/' ? 'Dashboard' : 'Home'}
-								</Button>
-							</Link>
-							{/* Notifications */}
+					<div className='flex items-center space-x-3'>
+						<Link to={location.pathname === '/' ? '/dashboard' : '/'}>
 							<Button
 								variant='text'
 								size='sm'
 								rounded='md'
 								shadow={false}
-								icon={<BellIcon />}
-								className='bg-slate-300 hover:bg-slate-400'
-							/>
-							{/* User menu */}
-							<div className='flex items-center space-x-2'>
-								<figure className='h-8 aspect-square rounded-md overflow-hidden'>
-									{user?.avatar ? (
-										<img
-											src={user?.avatar}
-											alt={user.name}
-											className='w-full h-full object-cover'
-										/>
+								icon={
+									location.pathname === '/' ? (
+										<Squares2X2Icon className='h-4 w-4' />
 									) : (
-										<div className='w-full h-full bg-indigo-500 flex items-center justify-center text-slate-50 font-bold'>
-											<UserIcon className='w-4 h-4' aria-hidden="true" />
-										</div>
-									)}
-								</figure>
-								<div>
-									<h3 className='text-sm font-bold text-slate-800 leading-none'>
-										{user?.name}
-									</h3>
-									<p className='text-xs text-slate-500 leading-none'>
-										{user?.email}
-									</p>
+										<HomeIcon className='h-4 w-4' />
+									)
+								}
+								className='bg-slate-300 hover:bg-slate-400'
+							>
+								{location.pathname === '/' ? 'Dashboard' : 'Home'}
+							</Button>
+						</Link>
+						{isAuthenticated && (
+							<>
+							{/* Notifications */}
+								<Button
+									variant='text'
+									size='sm'
+									rounded='md'
+									shadow={false}
+									icon={<BellIcon />}
+									className='bg-slate-300 hover:bg-slate-400'
+								/>
+								{/* User menu */}
+								<div className='flex items-center space-x-2'>
+									<figure className='h-8 aspect-square rounded-md overflow-hidden'>
+										{user?.avatar ? (
+											<img
+												src={user?.avatar}
+												alt={user.name}
+												className='w-full h-full object-cover'
+											/>
+										) : (
+											<div className='w-full h-full bg-indigo-500 flex items-center justify-center text-slate-50 font-bold'>
+												<UserIcon
+													className='w-4 h-4'
+													aria-hidden='true'
+												/>
+											</div>
+										)}
+									</figure>
+									<div>
+										<h3 className='text-sm font-bold text-slate-800 leading-none'>
+											{user?.name}
+										</h3>
+										<p className='text-xs text-slate-500 leading-none'>
+											{user?.email}
+										</p>
+									</div>
+									<ChevronDownIcon className='h-4 w-4' />
 								</div>
-								<ChevronDownIcon className='h-4 w-4' />
-							</div>
-						</div>
-					)}
+							</>
+						)}
+					</div>
 				</div>
 			</div>
 		</nav>
