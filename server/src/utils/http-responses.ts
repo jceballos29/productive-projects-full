@@ -13,19 +13,11 @@ export enum HttpStatus {
 
 class HttpResponses {
 	OK(res: Response, message: string, data: any) {
-		return res.status(HttpStatus.OK).json({
-			success: true,
-			message,
-			data,
-		});
+		return res.status(HttpStatus.OK).json(data);
 	}
 
 	Created(res: Response, message: string, data: any) {
-		return res.status(HttpStatus.CREATED).json({
-			success: true,
-			message,
-			data,
-		});
+		return res.status(HttpStatus.CREATED).json(data);
 	}
 
 	BadRequest(res: Response, message: string) {

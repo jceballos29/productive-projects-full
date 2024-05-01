@@ -61,7 +61,7 @@ const Login: React.FC<LoginProps> = () => {
 	return (
 		<PublicLayout>
 			<div className='w-full h-full flex flex-col items-center justify-center'>
-				<div className='w-full max-w-96 mx-auto px-8 py-10 rounded-md  bg-gray-50'>
+				<div className='w-full max-w-96 mx-auto px-8 py-10 rounded-md shadow border border-gray-100 bg-gray-50'>
 					<div className='space-y-2 mb-8'>
 						<h1 className='text-3xl font-bold leading-9 tracking-tight text-slate-900'>
 							Sign in to account

@@ -1,17 +1,19 @@
 import { Router } from 'express';
-import * as UserController from './users.controller';
 import {
-	createUserSchema,
-	updateUserSchema,
-	getUserSchema,
-	deleteUserSchema,
-} from './users.schema';
-import {
-	validate,
 	authenticate,
 	authorization,
+	validate,
 } from '../../middleware';
+import * as UserController from './users.controller';
 import { UserRole } from './users.model';
+import {
+	createManyUsersSchema,
+	createUserSchema,
+	deleteUserSchema,
+	findUsersSchema,
+	getUserSchema,
+	updateUserSchema,
+} from './users.schema';
 
 const router = Router();
 
@@ -24,6 +26,15 @@ router.post(
 	],
 	UserController.create,
 );
+router.post(
+	'/many',
+	[
+		authenticate,
+		authorization([UserRole.ADMIN]),
+		validate(createManyUsersSchema),
+	],
+	UserController.createMany,
+);
 router.get(
 	'/:userId',
 	[
@@ -35,7 +46,11 @@ router.get(
 );
 router.get(
 	'/',
-	[authenticate, authorization([UserRole.ADMIN])],
+	[
+		authenticate,
+		authorization([UserRole.ADMIN]),
+		validate(findUsersSchema),
+	],
 	UserController.find,
 );
 router.patch(

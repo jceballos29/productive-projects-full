@@ -15,20 +15,20 @@ export const login = async (
 			return;
 		}
 
-		const session = await AuthService.create({
-			user: user._id,
-			agent: req.headers['user-agent'] || '',
-			ip: req.ip || '',
-		});
+		// const session = await AuthService.create({
+		// 	user: user._id,
+		// 	agent: req.headers['user-agent'] || '',
+		// 	ip: req.ip || '',
+		// });
 
 		const accessToken = signToken(
 			{
 				id: user._id,
 				role: user.role,
-				session: session._id,
+				// session: session._id,
 			},
 			{
-				expiresIn: '1m',
+				expiresIn: '1d',
 			},
 		);
 
@@ -36,7 +36,7 @@ export const login = async (
 			{
 				id: user._id,
 				role: user.role,
-				session: session._id,
+				// session: session._id,
 			},
 			{
 				expiresIn: '7d',

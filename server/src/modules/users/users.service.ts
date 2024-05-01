@@ -1,8 +1,15 @@
+import { PaginationParameters } from 'mongoose-paginate-v2';
 import mongoose from '../../config/database';
-import UserModel, { UserDocument, User} from './users.model';
+import UserModel, { UserDocument, User } from './users.model';
 
 export const create = async (data: User): Promise<UserDocument> => {
 	return UserModel.create(data);
+};
+
+export const createMany = async (
+	data: User[],
+): Promise<UserDocument[]> => {
+	return UserModel.insertMany(data);
 };
 
 export const findOne = async (
@@ -14,9 +21,9 @@ export const findOne = async (
 
 export const find = async (
 	query: mongoose.FilterQuery<UserDocument>,
-	options: mongoose.QueryOptions = { lean: true },
-): Promise<UserDocument[]> => {
-	return await UserModel.find(query, {}, options);
+	options: mongoose.PaginateOptions,
+) => {
+	return await UserModel.paginate(query, options);
 };
 
 export const update = async (

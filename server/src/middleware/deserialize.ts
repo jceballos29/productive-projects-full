@@ -19,15 +19,16 @@ export const deserialize = async (
 	if (!accessToken) return next();
 	try {
 		const decoded = verifyToken(accessToken) as JwtPayload;
-		const session = await findOne({
-			_id: decoded?.session,
-			valid: true,
-		});
+		// const session = await findOne({
+		// 	_id: decoded?.session,
+		// 	valid: true,
+		// });
 
-		if (session) {
-			res.locals.user = decoded;
-			res.locals.session = session;
-		}
+		// if (session) {
+		// 	res.locals.user = decoded;
+		// 	res.locals.session = session;
+		// }
+		res.locals.user = decoded;
 
 		return next();
 	} catch (error: any) {

@@ -16,7 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 					// algorithm: [theme.defaultAlgorithm, theme.compactAlgorithm],
           components: {
             Layout: {
-              headerBg: '#f8f8f8',
+              headerBg: '#f5f5f5',
             }
           }
 				}}

@@ -1,12 +1,12 @@
 import bcrypt from 'bcrypt';
 import mongoose from '../../config/database';
 import { env } from '../../config/env';
+import paginate from 'mongoose-paginate-v2';
 
 export enum UserRole {
 	ADMIN = 'admin',
 	COORDINATOR = 'coordinator',
 	MANAGER = 'manager',
-	USER = 'user',
 }
 
 export interface User {
@@ -41,7 +41,6 @@ const UserSchema = new mongoose.Schema<UserDocument>(
 		role: {
 			type: String,
 			enum: Object.values(UserRole),
-			default: UserRole.USER,
 		},
 	},
 	{
@@ -70,6 +69,8 @@ UserSchema.methods.comparePassword = async function (
 	return bcrypt.compare(candidatePassword, this.password);
 };
 
-const UserModel = mongoose.model<UserDocument>('User', UserSchema);
+UserSchema.plugin(paginate);
+
+const UserModel = mongoose.model<UserDocument, mongoose.PaginateModel<UserDocument>>('User', UserSchema);
 
 export default UserModel;

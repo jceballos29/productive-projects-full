@@ -14,11 +14,11 @@ export const seed = async () => {
 				password: 'administrator123',
 				role: 'admin',
 			});
-			logger.info('El usuario "administrator" ha sido creado.');
+			logger.info('User "administrator" created successfully.');
 		} else {
-			logger.info('El usuario "administrator" ya existe.');
+			logger.info('User "administrator" already exists.');
 		}
 	} catch (error: any) {
-		logger.error(`Error al ejecutar el seed: ${error.message}`);
+		logger.error(`Error while seeding: ${error.message}`);
 	}
 };

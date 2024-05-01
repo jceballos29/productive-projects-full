@@ -4,7 +4,7 @@ import { env } from '../config';
 export type Payload = {
 	id: string;
 	role: string;
-	session: string;
+	// session: string;
 };
 
 export const signToken = (
