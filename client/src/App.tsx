@@ -1,46 +1,33 @@
+import { Routes, Route } from 'react-router-dom';
 import {
-	RouterProvider,
-	createBrowserRouter,
-} from 'react-router-dom';
-import { Loader } from './components';
+	MainLayout,
+	PrivateLayout,
+	PublicLayout,
+} from './components';
 import { Dashboard, Home, Login } from './pages';
-import { MainLayout } from './components/layouts';
-import PrivateRoutes from './guards/PrivateRoutes';
-
-const router = createBrowserRouter([
-	{
-		path: '/',
-		element: <MainLayout />,
-		children: [
-			{
-				index: true,
-				element: <Home />,
-			},
-			{
-				path: '/login',
-				element: <Login />,
-			},
-			{
-				path: '',
-				element: <PrivateRoutes />,
-				children: [
-					{
-						path: '/dashboard',
-						element: <Dashboard />,
-					},
-				],
-			},
-		],
-	},
-]);
-
-if (import.meta.hot) {
-	import.meta.hot.dispose(() => router.dispose());
-}
+import { ROUTES } from './constants';
+import { PrivateGuard } from './guards';
 
 const App = () => {
 	return (
-		<RouterProvider router={router} fallbackElement={<Loader />} />
+		<MainLayout>
+			<Routes>
+				<Route element={<PublicLayout />}>
+					<Route path={ROUTES.HOME} element={<Home />} />
+					<Route path={ROUTES.LOGIN} element={<Login />} />
+				</Route>
+				<Route element={<PrivateLayout />}>
+					<Route
+						path={ROUTES.DASHBOARD}
+						element={
+							<PrivateGuard>
+								<Dashboard />
+							</PrivateGuard>
+						}
+					/>
+				</Route>
+			</Routes>
+		</MainLayout>
 	);
 };
 

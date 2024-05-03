@@ -18,7 +18,11 @@ export const signToken = (
 };
 
 export const verifyToken = (token: string) => {
-	return jwt.verify(token, env.JWT_SECRET, {
-		algorithms: ['HS256'],
-	});
+	try {
+		return jwt.verify(token, env.JWT_SECRET, {
+			algorithms: ['HS256'],
+		});
+	} catch (error) {
+		return null
+	}
 };

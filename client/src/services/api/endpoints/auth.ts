@@ -1,6 +1,6 @@
-import { AxiosCall, LoginRequest, LoginResponse, UserResponse } from '@/models';
 import api from '../api';
 import { loadAbort } from '../../../utils';
+import { AxiosCall, LoginRequest, LoginResponse, UserResponse } from '../../../model';
 
 export const login = (
 	data: LoginRequest,

@@ -35,14 +35,14 @@ export const update = async (
 export const reIssueAccessToken = async (refreshToken: string) => {
 	const decoded = verifyToken(refreshToken) as JwtPayload;
 
-	const session = await findOne({
-		user: decoded?.id,
-		valid: true,
-	});
+	// const session = await findOne({
+	// 	user: decoded?.id,
+	// 	valid: true,
+	// });
 
-	if (!session) {
-		return null;
-	}
+	// if (!session) {
+	// 	return null;
+	// }
 
 	const user = await findOneUser({ _id: decoded?.id });
 
@@ -54,7 +54,7 @@ export const reIssueAccessToken = async (refreshToken: string) => {
 		{
 			id: user._id,
 			role: user.role,
-			session: session._id,
+			// session: session._id,
 		},
 		{
 			expiresIn: '15m',

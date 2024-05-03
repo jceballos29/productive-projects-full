@@ -1,28 +1,41 @@
-import { classNames } from '@/utils';
-import { TrophyIcon } from '@heroicons/react/24/outline';
+import { theme } from 'antd';
 import React from 'react';
 
 export interface LogoProps {
-	text?: boolean;
-	className?: string;
+	size?: number;
+	fontSize?: number;
+	letter?: string;
 }
 
-const Logo: React.FC<LogoProps> = ({ text = false, className }) => {
+const Logo: React.FC<LogoProps> = ({
+	size = 100,
+	fontSize = 48,
+	letter = 'P',
+}) => {
+
+	const { 
+		token: {
+			colorPrimary,
+			colorBgContainer
+		}
+	} = theme.useToken()
+
 	return (
 		<div
-			className={classNames(
-				className,
-				`flex items-center ${text ? 'gap-1' : ''}`,
-			)}
+			style={{
+				width: size,
+				height: size,
+				backgroundColor: colorPrimary,
+				color: colorBgContainer,
+				fontSize: fontSize,
+				fontWeight: 'bold',
+				display: 'flex',
+				justifyContent: 'center',
+				alignItems: 'center',
+				borderRadius: '15%',
+			}}
 		>
-			<figure className='w-8 aspect-square border flex items-center justify-center rounded-md bg-indigo-500 border-indigo-500'>
-				<TrophyIcon className='h-5 w-5 text-indigo-50' />
-			</figure>
-			{text && (
-				<p className='text-base font-bold tracking-tight text-slate-900'>
-					<span className='text-indigo-500'>Productive</span> Projects
-				</p>
-			)}
+			{letter}
 		</div>
 	);
 };

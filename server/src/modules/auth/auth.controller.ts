@@ -9,6 +9,7 @@ export const login = async (
 	res: Response,
 ): Promise<void> => {
 	try {
+		console.log({body: req.body})
 		const user = await validatePassword(req.body);
 		if (!user) {
 			httpResponses.Unauthorized(res, 'Invalid email or password');
@@ -28,7 +29,7 @@ export const login = async (
 				// session: session._id,
 			},
 			{
-				expiresIn: '1d',
+				expiresIn: '15m',
 			},
 		);
 
@@ -106,7 +107,7 @@ export const me = async (req: Request, res: Response): Promise<void> => {
 	try {
 		const user = await findOneUser({ _id: res.locals.user.id });
 		if (!user) {
-			httpResponses.NotFound(res, 'User not found');
+			httpResponses.Empty(res, 'User not found');
 			return;
 		}
 		httpResponses.OK(res, 'User found', user);

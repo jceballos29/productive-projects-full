@@ -1,0 +1,15 @@
+.private {
+  width: 100%;
+  min-height: 100vh;
+  height: 100vh;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: #d9d9d9;
+  border-radius: 6px;
+}

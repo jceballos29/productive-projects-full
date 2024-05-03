@@ -1,3 +1,3 @@
-export * from './Dashboard';
-export * from './Login';
-export * from './Home';
+export * from './dashboard';
+export * from './home';
+export * from './login';

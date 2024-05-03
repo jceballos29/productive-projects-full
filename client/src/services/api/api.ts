@@ -12,7 +12,6 @@ const api = axios.create({
 api.interceptors.request.use(
 	async (config) => {
 		const token = localStorage.getItem('accessToken');
-
 		if (token) {
 			config.headers.Authorization = `Bearer ${token}`;
 		}
@@ -23,32 +22,34 @@ api.interceptors.request.use(
 );
 
 api.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const originalRequest = error.config;
-    if (error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      localStorage.removeItem('accessToken');
-      const refreshToken = localStorage.getItem('refreshToken');
+	(response) => response,
+	async (error) => {
+		const originalRequest = error.config;
+		if (error.response.status === 401 && !originalRequest._retry) {
+			originalRequest._retry = true;
+			localStorage.removeItem('accessToken');
+			const refreshToken = localStorage.getItem('refreshToken');
+			if (refreshToken) {
+				const response = await api.post('/auth/refresh', {
+					refreshToken,
+				});
+				if (response.status === 200) {
+					localStorage.setItem(
+						'accessToken',
+						response.data.accessToken,
+					);
+					localStorage.setItem(
+						'refreshToken',
+						response.data.refreshToken,
+					);
 
-      if (refreshToken) {
-        const response = await api.post('/auth/refresh', {
-          refreshToken,
-        });
+					return api(originalRequest);
+				}
+			}
+		}
 
-        if (response.status === 200) {
-          const { data: result } = response
-          localStorage.setItem('accessToken', result.data.accessToken);
-          localStorage.setItem('refreshToken', result.data.refreshToken);
-
-          return api(originalRequest);
-        }
-      }
-    }
-
-    return Promise.reject(error);
-  },
+		return Promise.reject(error);
+	},
 );
-
 
 export default api;

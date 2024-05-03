@@ -12,7 +12,8 @@ import { Outlet } from 'react-router-dom';
 
 export interface MainLayoutProps {}
 
-const MainLayout: React.FC<MainLayoutProps> = () => {
+const 
+MainLayout: React.FC<MainLayoutProps> = () => {
 	const dispatch = useAppDispatch();
 	const { callEndpoint } = useRequest<UserResponse>();
 	const [loading, setLoading] = React.useState(true);

@@ -15,26 +15,31 @@ export const deserialize = async (
 		/^Bearer\s/,
 		'',
 	);
-
+	
 	if (!accessToken) return next();
-	try {
-		const decoded = verifyToken(accessToken) as JwtPayload;
-		// const session = await findOne({
-		// 	_id: decoded?.session,
-		// 	valid: true,
-		// });
+	const decoded = verifyToken(accessToken) as JwtPayload;
+	// const session = await findOne({
+	// 	_id: decoded?.session,
+	// 	valid: true,
+	// });
 
-		// if (session) {
-		// 	res.locals.user = decoded;
-		// 	res.locals.session = session;
-		// }
+	// if (session) {
+	// 	res.locals.user = decoded;
+	// 	res.locals.session = session;
+	// }
+
+	if (decoded) {
 		res.locals.user = decoded;
-
-		return next();
-	} catch (error: any) {
-		if (error instanceof TokenExpiredError) {
-			return httpResponses.Unauthorized(res, 'Token expired');
-		}
-		return httpResponses.InternalServerError(res, error.message);
 	}
+
+	return next();
+	// try {
+
+	// } catch (error: any) {
+	// 	console.log({error})
+	// 	if (error instanceof TokenExpiredError) {
+	// 		return httpResponses.Unauthorized(res, 'Token expired');
+	// 	}
+	// 	return httpResponses.InternalServerError(res, error.message);
+	// }
 };

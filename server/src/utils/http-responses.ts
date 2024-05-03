@@ -3,6 +3,7 @@ import { Response } from 'express';
 export enum HttpStatus {
 	OK = 200, // OK: Standard response for successful HTTP requests.
 	CREATED = 201, // Created: The request has been fulfilled, resulting in the creation of a new resource.
+	EMPTY = 204, // No Content: The server successfully processed the request and is not returning any content.
 	BAD_REQUEST = 400, // Bad Request: The server cannot or will not process the request due to an apparent client error.
 	NOT_FOUND = 404, // Not Found: The requested resource could not be found but may be available in the future.
 	UNAUTHORIZED = 401, // Unauthorized: The request has not been applied because it lacks valid authentication credentials for the target resource.
@@ -18,6 +19,10 @@ class HttpResponses {
 
 	Created(res: Response, message: string, data: any) {
 		return res.status(HttpStatus.CREATED).json(data);
+	}
+
+	Empty(res: Response, message: string) {
+		return res.status(HttpStatus.EMPTY).json();
 	}
 
 	BadRequest(res: Response, message: string) {

@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 import { logger } from '../utils';
 
 export const connect = async (url: string) => {
-	console.log('url', url);
 	try {
 		await mongoose.connect(url);
 		logger.info('Database connected');
