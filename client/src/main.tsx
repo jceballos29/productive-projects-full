@@ -14,18 +14,19 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 			<ConfigProvider
 				locale={esES}
 				theme={{
-					// token: {
+					token: {
+						fontFamily: 'Poppins, sans-serif',
 					// 	colorPrimary: '#1d4ed8',
 					// 	colorInfo: '#1d4ed8',
 					//   colorTextBase: '#0a0a0a', // Neutral 950
 					//   colorBgBase: '#f4f4f5', // Neutral 50
-					// },
+					},
 					components: {
 						Layout: {
 							// headerBg: '#f4f4f5',
 							// headerColor: '#0a0a0a',
-							headerHeight: 50,
-							headerPadding: '0 20px',
+							headerHeight: 60,
+							headerPadding: '0px',
 							// bodyBg: '#f4f4f5',
 							// footerBg: '#f4f4f5',
 							footerPadding: '12px 20px',
@@ -35,7 +36,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 			>
 				<BrowserRouter>
 					<App />
-				</BrowserRouter>
+				</BrowserRouter>	
 			</ConfigProvider>
 		</Provider>
 	</React.StrictMode>,

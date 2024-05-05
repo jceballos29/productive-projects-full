@@ -1,17 +1,16 @@
 'use client';
-import { Button, Flex, Space, Typography } from 'antd';
+import { Button, Flex, Space } from 'antd';
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ROUTES } from '../../../../../constants';
-import Logo from '../../../../logo';
+import {
+	RootState,
+	useAppSelector,
+} from '../../../../../services/store';
+import { Logotype } from '../../../../logotype';
 import styles from './navbar.module.css';
-import { RootState, useAppSelector } from '../../../../../services/store';
 
-export interface NavbarProps {
-	// types...
-}
-
-const { Text } = Typography;
+export interface NavbarProps {}
 
 const Navbar: React.FC<NavbarProps> = () => {
 	const location = useLocation();
@@ -25,16 +24,7 @@ const Navbar: React.FC<NavbarProps> = () => {
 			justify='space-between'
 			align='center'
 		>
-			<Link to={ROUTES.HOME}>
-				<Space>
-					<Flex align='center' justify='center' gap={6}>
-						<Logo size={28} fontSize={14} />
-						<Text strong style={{ fontSize: 18, fontWeight: 'bold' }}>
-							Proyectos
-						</Text>
-					</Flex>
-				</Space>
-			</Link>
+			<Logotype />
 			<Space>
 				{location.pathname === ROUTES.HOME &&
 					(isAuthenticated ? (

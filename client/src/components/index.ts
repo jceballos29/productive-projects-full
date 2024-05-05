@@ -1,4 +1,3 @@
-export * from './layouts/main';
-export * from './layouts/private';
-export * from './layouts/public';
-export { default as Logo} from './logo';
+export * from './layouts';
+export * from './logotype'
+export * from './footbar';

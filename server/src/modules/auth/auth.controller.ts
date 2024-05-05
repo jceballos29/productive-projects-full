@@ -1,4 +1,7 @@
-import { validatePassword, findOne as findOneUser } from '../users/users.service';
+import {
+	validatePassword,
+	findOne as findOneUser,
+} from '../users/users.service';
 import { Request, Response } from 'express';
 import { httpResponses, signToken } from '../../utils';
 import { LoginInput, RefreshInput } from './auth.schema';
@@ -9,7 +12,6 @@ export const login = async (
 	res: Response,
 ): Promise<void> => {
 	try {
-		console.log({body: req.body})
 		const user = await validatePassword(req.body);
 		if (!user) {
 			httpResponses.Unauthorized(res, 'Invalid email or password');
@@ -75,7 +77,6 @@ export const logout = async (
 
 		httpResponses.OK(res, 'User logged out', {});
 	} catch (error: any) {
-		console.log(error);
 		httpResponses.InternalServerError(res, error.message);
 	}
 };
@@ -103,7 +104,10 @@ export const refresh = async (
 	}
 };
 
-export const me = async (req: Request, res: Response): Promise<void> => {
+export const me = async (
+	req: Request,
+	res: Response,
+): Promise<void> => {
 	try {
 		const user = await findOneUser({ _id: res.locals.user.id });
 		if (!user) {

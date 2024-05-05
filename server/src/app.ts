@@ -2,10 +2,10 @@ import cors from 'cors';
 import express, { Application, Request, Response } from 'express';
 import helmet from 'helmet';
 
-import { deserialize, request } from '../middleware';
-import { httpResponses } from '../utils';
+import { deserialize, request } from './middleware';
+import { httpResponses } from './utils';
 
-import routes from '../modules';
+import routes from './modules';
 
 export const buildApp = () => {
 	const app: Application = express();

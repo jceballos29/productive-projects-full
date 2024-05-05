@@ -2,7 +2,7 @@ import { AxiosResponse, isAxiosError } from 'axios';
 import React from 'react';
 import { AxiosCall } from '../model';
 
-const useRequest = <T>() => {
+const useRequest = <T,>() => {
 	const [loading, setLoading] = React.useState(false);
 	const controller = React.useRef<AbortController | undefined>(
 		undefined,

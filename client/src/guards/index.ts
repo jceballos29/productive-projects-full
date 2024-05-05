@@ -1,1 +1,1 @@
-export { default as PrivateGuard } from './PrivateGuard';
+export { default as PrivateGuard } from './private.guard';

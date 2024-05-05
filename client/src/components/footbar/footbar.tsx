@@ -3,16 +3,14 @@ import React from 'react';
 import styles from './footbar.module.css';
 import { Flex, Typography } from 'antd';
 
-export interface FootbarProps {
-	// types...
-}
+export interface FootbarProps {}
 
 const { Text } = Typography;
 
 const Footbar: React.FC<FootbarProps> = () => {
 	return (
-		<Flex align='center' justify='end' className={styles.footbar}>
-			<Text type='secondary' style={{ fontSize: 12}} >jceballos.dev © 2024</Text>
+		<Flex className={styles.footbar} align='center' justify='end'>
+			<Text type='secondary'>jceballos.dev © 2024</Text>
 		</Flex>
 	);
 };
