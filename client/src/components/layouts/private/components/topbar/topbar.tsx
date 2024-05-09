@@ -58,7 +58,7 @@ const Topbar: React.FC<TopbarProps> = () => {
 						<HomeOutlined />
 					</Button>
 				</Link>
-				<Badge count={99} overflowCount={10}>
+				<Badge count={99} overflowCount={10} style={{ fontSize: 10}} >
 					<Button shape='circle'>
 						<BellOutlined />
 					</Button>
@@ -85,7 +85,7 @@ const Topbar: React.FC<TopbarProps> = () => {
 								key: 'logout',
 								label: 'Cerrar sesión',
 								icon: <LogoutOutlined />,
-								// onClick: () => handleLogout,
+								onClick: () => handleLogout(),
 							},
 						],
 					}}

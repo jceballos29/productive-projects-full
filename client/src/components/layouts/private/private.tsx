@@ -15,12 +15,16 @@ const { Header, Content, Sider, Footer } = Layout;
 const PrivateLayout: React.FC<PrivateLayoutProps> = () => {
 	return (
 		<Layout className={styles.private}>
-			<Sider theme='light' width={320} style={{ background: '#f5f5f5' }}>
-				<Navbar></Navbar>
+			<Sider
+				theme='light'
+				width={288}
+				style={{ background: '#f5f5f5' }}
+			>
+				<Navbar />
 			</Sider>
 			<Layout>
 				<Header style={{ background: '#f5f5f5' }}>
-					<Topbar></Topbar>
+					<Topbar />
 				</Header>
 				<Content style={{ paddingRight: 20 }}>
 					<div className={styles.content}>
