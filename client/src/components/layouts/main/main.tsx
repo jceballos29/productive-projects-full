@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import styles from './main.module.css';
+import styles from './Main.module.css';
 import { Spin } from 'antd';
 import { useRequest } from '../../../hooks';
 import { UserResponse } from '../../../model';

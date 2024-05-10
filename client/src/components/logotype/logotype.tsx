@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import styles from './logotype.module.css';
+import styles from './Logotype.module.css';
 import { Flex, theme, Typography } from 'antd';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '../../constants';

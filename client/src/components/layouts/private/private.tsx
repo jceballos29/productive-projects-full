@@ -1,10 +1,10 @@
 'use client';
 import React from 'react';
-import styles from './private.module.css';
+import styles from './Private.module.css';
 import { Outlet } from 'react-router-dom';
 import { Layout } from 'antd';
 import { Navbar, Topbar } from './components';
-import { Footbar } from '../../footbar';
+import { Footbar } from '../../Footbar';
 
 export interface PrivateLayoutProps {
 	// types...

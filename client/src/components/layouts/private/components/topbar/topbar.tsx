@@ -19,7 +19,7 @@ import {
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../../../../constants';
-import styles from './topbar.module.css';
+import styles from './Topbar.module.css';
 import {
 	RootState,
 	useAppDispatch,

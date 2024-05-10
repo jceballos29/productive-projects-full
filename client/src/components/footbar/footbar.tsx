@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import styles from './footbar.module.css';
+import styles from './Footbar.module.css';
 import { Flex, Typography } from 'antd';
 
 export interface FootbarProps {}

@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
-import styles from './navbar.module.css';
-import { Logotype } from '../../../../logotype';
+import styles from './Navbar.module.css';
+import { Logotype } from '../../../../Logotype';
 
 export interface NavbarProps {
 	// types...

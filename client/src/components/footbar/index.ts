@@ -1,1 +1,1 @@
-export { default as Footbar } from './footbar';
+export { default as Footbar } from './Footbar';

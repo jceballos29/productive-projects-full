@@ -3,8 +3,8 @@ import { Layout } from 'antd';
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { Navbar } from './components';
-import styles from './public.module.css';
-import { Footbar } from '../../footbar';
+import styles from './Public.module.css';
+import { Footbar } from '../../Footbar';
 
 export interface PublicLayoutProps {}
 

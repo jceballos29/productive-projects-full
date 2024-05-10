@@ -7,8 +7,8 @@ import {
 	RootState,
 	useAppSelector,
 } from '../../../../../services/store';
-import { Logotype } from '../../../../logotype';
-import styles from './navbar.module.css';
+import { Logotype } from '../../../../Logotype';
+import styles from './Navbar.module.css';
 
 export interface NavbarProps {}
 

@@ -1,1 +1,1 @@
-export { default as PrivateLayout } from './private';
+export { default as PrivateLayout } from './Private';
