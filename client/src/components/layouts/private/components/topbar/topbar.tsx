@@ -58,7 +58,7 @@ const Topbar: React.FC<TopbarProps> = () => {
 						<HomeOutlined />
 					</Button>
 				</Link>
-				<Badge count={99} overflowCount={10} style={{ fontSize: 10}} >
+				<Badge count={99} overflowCount={10} style={{ fontSize: 10 }}>
 					<Button shape='circle'>
 						<BellOutlined />
 					</Button>
@@ -66,6 +66,23 @@ const Topbar: React.FC<TopbarProps> = () => {
 				<Dropdown
 					menu={{
 						items: [
+							{
+								key: 'user',
+								label: (
+									<Flex vertical align='center' justify='center'>
+										<Avatar
+											alt={user.name}
+											shape='circle'
+											src='https://randomuser.me/api/portraits/med/men/75.jpg'
+											icon={<UserOutlined />}
+											size={80}
+										/>
+									</Flex>
+								),
+							},
+							{
+								type: 'divider',
+							},
 							{
 								key: 'profile',
 								label: 'Perfil',
